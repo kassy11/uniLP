@@ -1,4 +1,6 @@
-﻿#include "token-list.h"
+﻿// 起動時プログラム、メイン
+
+#include "token-list.h"
 
 /* keyword list */
 key key_keyword[KEYWORDSIZE] = {
@@ -82,7 +84,7 @@ int main(int nc, char *np[])
     while ((token = scan()) >= 0)
     {
         numtoken[token]++;
-        printf("トークン結果 : %s\n",tokenstr[token]);
+        // printf("トークン結果 : %s\n",tokenstr[token]);
     }
     end_scan();
     /* 作成する部分:カウントした結果を出力する */
