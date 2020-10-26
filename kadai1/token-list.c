@@ -64,8 +64,19 @@ char *tokenstr[NUMOFTOKEN + 1] = {
         "false", "NUMBER", "STRING", "+", "-", "*", "=", "<>", "<", "<=", ">",
         ">=", "(", ")", "[", "]", ":=", ".", ",", ":", ";", "read", "write", "break"};
 
-int main(int nc, char *np[])
-{
+// command-line args
+int main(int nc, char *np[]){
+    if(strcmp(np[1], "test")==0){
+      printf("----blackbox test----\n");
+      blackbox();
+      printf("----whitebox test----\n");
+      // whitebox();
+      printf("----integration test---\n");
+      printf("finnally, you can run integration test by");
+      printf("\x1b[32m make test\n");
+      return 0;
+    }
+    
     int token, i;
 
     if (nc < 2){
@@ -90,7 +101,6 @@ int main(int nc, char *np[])
     printf("-----Name Count-----\n");
     print_idtab();
     release_idtab();
-    return 0;
 }
 
 void error(char *mes){

@@ -1,4 +1,5 @@
-﻿/* token-list.h  */
+﻿
+/* token-list.h  */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -87,3 +88,8 @@ extern struct ID *search_idtab(char *np);
 extern void id_countup(char *np);
 extern void print_idtab(void);
 extern void release_idtab(void);
+
+//blackbox.c
+extern void assert(int expected, int actual);
+extern void blackbox();
+extern void init_scan_test();

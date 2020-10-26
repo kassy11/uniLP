@@ -1,5 +1,7 @@
 PROG := tc
-SRCS := token-list.c scan.c id-list.c
+TPROG := test
+RDIR := results
+SRCS := token-list.c scan.c id-list.c blackbox.c
 OBJS := $(SRCS:%.c=%.o)
 DEPS := $(SRCS:%.c=%.d)
 
@@ -16,7 +18,7 @@ $(PROG): $(OBJS)
 	$(CC) -c -MMD -MP $<
 
 clean:
-	rm -f $(PROG) $(OBJS) $(DEPS)
+	rm -rf $(PROG) $(OBJS) $(DEPS) $(RDIR)
 
 test: $(PROG)
 	./test.sh

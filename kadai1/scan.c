@@ -10,12 +10,12 @@ extern char *tokenstr[NUMOFTOKEN + 1];
 extern key key_keyword[KEYWORDSIZE];
 extern key key_symbol[KEYWORDSIZE];
 
-int init_scan(char *filename)
-{
+int init_scan(char *filename){
+    char mpl[] = ".mpl";
+    
     fp = fopen(filename,"r");
-    if (fp == NULL)
-    {
-        printf("Cannot open the file\n");
+    if ((fp == NULL) || (strstr(filename, mpl)==NULL)){
+        printf("init_scan: Cannot open the file\n");
         return -1;
     }
     cbuf = fgetc(fp);
@@ -25,8 +25,7 @@ int init_scan(char *filename)
     return 0;
 }
 
-int scan(void)
-{
+int scan(void){
     int i = 0;
     char token[MAXSTRSIZE];
 
@@ -209,8 +208,7 @@ int scan(void)
     return -1;
 }
 
-int get_linenum(void)
-{
+int get_linenum(void){
     return linenum;
 }
 void end_scan(void){
