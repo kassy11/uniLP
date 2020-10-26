@@ -2,27 +2,22 @@
 
 #include "token-list.h"
 FILE *fp;
-char cbuf; // 一文字分のバッファ
+char cbuf; // buffer for one string
 int linenum;
 int num_attr;
 char string_attr[MAXSTRSIZE];
-// scan()の戻り値が文字列・名前のときその文字列を格納する、符号なし整数のときは数字列
 extern char *tokenstr[NUMOFTOKEN + 1];
 extern key key_keyword[KEYWORDSIZE];
 extern key key_symbol[KEYWORDSIZE];
 
-// fileをオープンする
 int init_scan(char *filename)
 {
     fp = fopen(filename,"r");
     if (fp == NULL)
     {
-        //失敗と表示し終了
-        printf("ファイルオープン失敗\n");
+        printf("Cannot open the file\n");
         return -1;
     }
-
-    // ファイル読み込み成功したら１文字分バッファに読み込んでおく
     cbuf = fgetc(fp);
     if(cbuf < 0)return -1;
     linenum = 1;
@@ -30,7 +25,6 @@ int init_scan(char *filename)
     return 0;
 }
 
-// トークンをひとつスキャンして、次のトークンを返す
 int scan(void)
 {
     int i = 0;
@@ -38,14 +32,14 @@ int scan(void)
 
     memset(token, 0, sizeof(token));
     if(cbuf < 0)return -1;
-    // 特殊文字
+    // special character
     if(cbuf <= 32){
       while(1){
-        // 改行
+        // new line
         if ((cbuf == 13) || (cbuf == 10)){
             char before_cbuf = cbuf;
             cbuf = fgetc(fp);
-            // 組み合わせて改行を表現する環境に対応
+            // adapt every environment 
             if ((before_cbuf == 10 && cbuf == 13) || (before_cbuf == 13 && cbuf == 10))
             {
                 cbuf = fgetc(fp);//CRLF
@@ -62,7 +56,7 @@ int scan(void)
         }
       }
     }
-    // アルファベット
+    // Alphabet
     if((cbuf >= 65 && cbuf <= 90) || (cbuf >= 97 && cbuf <= 122)){
       while(1){
           snprintf(token,MAXSTRSIZE,"%s%c",token,cbuf);
@@ -70,7 +64,7 @@ int scan(void)
           cbuf = fgetc(fp);
           if(cbuf < 0)return -1;
 
-          // 文字と数字以外の時（区切り）
+          // Not Alphabet and Number
           if (!((cbuf >= 65 && cbuf <= 90) || (cbuf >= 97 && cbuf <= 122) || (cbuf >= 48 && cbuf <= 57))){
 
               for(i = 0;i < KEYWORDSIZE;i++)
@@ -86,13 +80,13 @@ int scan(void)
           }
       }
     }
-    // 数字
+    // Number
     else if(cbuf >= 48 && cbuf <= 57){
       while(1){
           snprintf(token, MAXSTRSIZE, "%s%c", token, cbuf);
           cbuf = fgetc(fp);
           if(cbuf < 0)return -1;
-          // 数字以外になったとき
+          // Not Number
           if (!(cbuf >= 48 && cbuf <= 57))
           {
               num_attr = atoi(token);
@@ -103,11 +97,9 @@ int scan(void)
           }
       }
     }
-    // 記号
     else if ((cbuf >= 40 && cbuf <= 46) || (cbuf >= 58 && cbuf <= 62) || cbuf == 91 || cbuf == 93){
       snprintf(token, MAXSTRSIZE, "%s%c", token, cbuf);
 
-      // 先読み
       char before_cbuf = cbuf;
       cbuf = fgetc(fp);
       if(cbuf < 0){
@@ -118,7 +110,7 @@ int scan(void)
         }
         return -1;
       }
-      // 比較演算子
+      // Comparison
       if ((before_cbuf == 60 && cbuf == 62) || (before_cbuf == 60 && cbuf == 61) || (before_cbuf == 62 && cbuf == 61) || (before_cbuf == 58 && cbuf == 61)){
         snprintf(token, MAXSTRSIZE, "%s%c", token, cbuf);
         cbuf = fgetc(fp);
@@ -132,21 +124,21 @@ int scan(void)
       }
       return -1;//error
     }
-    // シングルクオートから始まるstring
+    // string
     else if (cbuf == 39) {
       cbuf = fgetc(fp);
       while (1){
 
         if (cbuf < 0){
-            error("文字列内でEOFが発生指定ます．");
+            error("EOF happened\n");
             return -1;
         }
 
-        // stringの終わり
+        // end of string
         if (cbuf == 39){
           cbuf = fgetc(fp);
 
-          // 文字のあとに文字があるとき
+          // string after other string
           if (cbuf == 39) {
               cbuf = fgetc(fp);
               continue;
@@ -160,22 +152,22 @@ int scan(void)
           snprintf(token, MAXSTRSIZE, "%s%c", token, cbuf);
           cbuf = fgetc(fp);
           if (cbuf < 0){
-              error("文字列内でEOFが発生しています．");
+              error("EOF happened\n");
               return -1;
           }
           else if ((cbuf == 13) || (cbuf == 10)){
-              error("文字列内に改行が含まれています．");
+              error("included new line in string\n");
               return -1;
           }
         }
       }
     }
-    // {}でのコメント
+    // {comment}
     else if(cbuf == 123){
       while(1){
         cbuf = fgetc(fp);
         if (cbuf < 0){
-            error("注釈内でEOFが発生しています．");
+            error("EOF happened\n");
             return -1;
         }
         if (cbuf == 125){
@@ -185,30 +177,27 @@ int scan(void)
         }
       }
     }
-    // スラッシュでのコメント
+    // /*comment*/
     else if(cbuf == 47){
       cbuf = fgetc(fp);
       if (cbuf < 0){
-        error("注釈の開始時にEOFが発生しています．");
+        error("EOF happened\n");
         return -1;
       }
 
-      // *スタート
       if(cbuf == 42){
         while (1){
           cbuf = fgetc(fp);
           if (cbuf < 0){
-            error("注釈内でEOFが発生しています．");
+            error("EOF happened\n");
             return -1;
           }
 
-          // *終わり
           if (cbuf == 42){
             cbuf = fgetc(fp);
             if (cbuf < 0){
               return -1;
             }
-            // コメント終わり
             if(cbuf == 47){
               cbuf = fgetc(fp);
               return 0;
@@ -220,7 +209,6 @@ int scan(void)
     return -1;
 }
 
-// 最も直近でscan()に返された
 int get_linenum(void)
 {
     return linenum;

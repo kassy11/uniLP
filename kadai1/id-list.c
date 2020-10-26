@@ -1,4 +1,4 @@
-﻿// トークン名を管理するテーブル
+﻿// Table for token
 
 #include "token-list.h"
 
@@ -21,7 +21,7 @@ struct ID *search_idtab(char *np) {	/* search the name pointed by np */
     return(NULL);
 }
 
-// 名前付きトークンをテーブルに追加する
+// add token to table
 void id_countup(char *np) {	
     struct ID *p;
     char *cp;
@@ -44,7 +44,6 @@ void id_countup(char *np) {
     }
 }
 
-// テーブルを表示する
 void print_idtab() {	/* Output the registered data */
     struct ID *p;
 

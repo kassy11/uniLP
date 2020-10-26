@@ -1,4 +1,4 @@
-﻿// 起動時プログラム、メイン
+﻿// Main Program
 
 #include "token-list.h"
 
@@ -81,14 +81,13 @@ int main(int nc, char *np[])
       numtoken[token]++;
     }
     end_scan();
-    /* 作成する部分:カウントした結果を出力する */
-    printf("-----トークンのカウント-----\n");
+    printf("----Token count----\n");
     for(i = 1;i < NUMOFTOKEN + 1;i++){
       if(numtoken[i] >= 1){
           printf("%s   ::::  %d\n",tokenstr[i],numtoken[i]);
       }
     }
-    printf("-----名前ごとのカウント-----\n");
+    printf("-----Name Count-----\n");
     print_idtab();
     release_idtab();
     return 0;

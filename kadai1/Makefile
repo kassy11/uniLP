@@ -17,3 +17,10 @@ $(PROG): $(OBJS)
 
 clean:
 	rm -f $(PROG) $(OBJS) $(DEPS)
+
+test: $(PROG)
+	./test.sh
+
+.PHONY: test clean
+
+
