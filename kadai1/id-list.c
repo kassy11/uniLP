@@ -1,4 +1,6 @@
-﻿#include "token-list.h"
+﻿// トークン名を管理するテーブル
+
+#include "token-list.h"
 
 struct ID {
     char *name;
@@ -19,7 +21,8 @@ struct ID *search_idtab(char *np) {	/* search the name pointed by np */
     return(NULL);
 }
 
-void id_countup(char *np) {	/* Register and count up the name pointed by np */
+// 名前付きトークンをテーブルに追加する
+void id_countup(char *np) {	
     struct ID *p;
     char *cp;
 
@@ -41,12 +44,13 @@ void id_countup(char *np) {	/* Register and count up the name pointed by np */
     }
 }
 
+// テーブルを表示する
 void print_idtab() {	/* Output the registered data */
     struct ID *p;
 
     for(p = idroot; p != NULL; p = p->nextp) {
         if(p->count != 0)
-            printf("\t\"Identifier\" \"%s\"\t%d\n", p->name, p->count);
+            printf("Identifier\" \"%s\"\t%d\n", p->name, p->count);
     }
 }
 

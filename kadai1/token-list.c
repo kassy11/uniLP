@@ -67,41 +67,34 @@ char *tokenstr[NUMOFTOKEN + 1] = {
 int main(int nc, char *np[])
 {
     int token, i;
-    //char *ptr;
 
-    if (nc < 2)
-    {
-        printf("File name id not given.\n");
-        return 0;
+    if (nc < 2){
+      printf("File name id not given.\n");
+      return 0;
     }
-    if (init_scan(np[1]) < 0)
-    {
-        printf("File %s can not open.\n", np[1]);
-        return 0;
+    if (init_scan(np[1]) < 0){
+      printf("File %s can not open.\n", np[1]);
+      return 0;
     }
 
-    /* 作成する部分：トークンカウント用の配列？を初期化する */
-    while ((token = scan()) >= 0)
-    {
-        numtoken[token]++;
-        // printf("トークン結果 : %s\n",tokenstr[token]);
+    while ((token = scan()) >= 0) {
+      numtoken[token]++;
     }
     end_scan();
     /* 作成する部分:カウントした結果を出力する */
-    printf("LAST-LINENUM : %d\n",get_linenum());
-    printf("LAST-STRING: %s\n", string_attr);
-    for(i = 1;i < NUMOFTOKEN + 1;i++)
-    {
-        if(numtoken[i] >= 1)
-            printf("%s   ::::  %d\n",tokenstr[i],numtoken[i]);
+    printf("-----トークンのカウント-----\n");
+    for(i = 1;i < NUMOFTOKEN + 1;i++){
+      if(numtoken[i] >= 1){
+          printf("%s   ::::  %d\n",tokenstr[i],numtoken[i]);
+      }
     }
+    printf("-----名前ごとのカウント-----\n");
     print_idtab();
     release_idtab();
     return 0;
 }
 
-void error(char *mes)
-{
-    printf("\n ERROR: %s\n", mes);
-    end_scan();
+void error(char *mes){
+  printf("\n ERROR: %s\n", mes);
+  end_scan();
 }

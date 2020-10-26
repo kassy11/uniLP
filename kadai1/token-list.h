@@ -76,7 +76,7 @@ extern void error(char *mes);
 /* scan.c */
 extern int init_scan(char *filename);
 extern int scan(void);
-extern int num_attr;
+extern int num_attr; // scan()の戻り値が符号なし整数のとき、その値を格納
 extern char string_attr[MAXSTRSIZE];
 extern int get_linenum(void);
 extern void end_scan(void);
