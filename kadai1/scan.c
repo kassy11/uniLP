@@ -96,6 +96,7 @@ int scan(void){
           }
       }
     }
+    // symbol
     else if ((cbuf >= 40 && cbuf <= 46) || (cbuf >= 58 && cbuf <= 62) || cbuf == 91 || cbuf == 93){
       snprintf(token, MAXSTRSIZE, "%s%c", token, cbuf);
 
