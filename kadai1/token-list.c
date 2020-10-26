@@ -69,8 +69,11 @@ int main(int nc, char *np[]){
     if(strcmp(np[1], "test")==0){
       printf("----blackbox test----\n");
       blackbox();
+      printf("\n");
       printf("----whitebox test----\n");
-      // whitebox();
+      // work in progress
+//      whitebox();
+      printf("\n");
       printf("----integration test---\n");
       printf("finnally, you can run integration test by");
       printf("\x1b[32m make test\n");

@@ -89,7 +89,15 @@ extern void id_countup(char *np);
 extern void print_idtab(void);
 extern void release_idtab(void);
 
-//blackbox.c
+//test-utils.c
 extern void assert(int expected, int actual);
+extern void assert_str(char *expected, char *actual);
+
+// blackbox.c
 extern void blackbox();
 extern void init_scan_test();
+
+// whitebox.c
+//extern void whitebox();
+//extern void search_idtab_test();
+//extern void id_countup_test();

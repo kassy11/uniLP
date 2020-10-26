@@ -1,7 +1,7 @@
 PROG := tc
 TPROG := test
 RDIR := results
-SRCS := token-list.c scan.c id-list.c blackbox.c
+SRCS := token-list.c scan.c id-list.c blackbox.c whitebox.c test-utils.c
 OBJS := $(SRCS:%.c=%.o)
 DEPS := $(SRCS:%.c=%.d)
 

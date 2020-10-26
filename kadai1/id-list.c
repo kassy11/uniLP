@@ -8,6 +8,7 @@ struct ID {
     struct ID *nextp;
 }  *idroot;
 
+
 void init_idtab() {		/* Initialise the table */
     idroot = NULL;
 }
