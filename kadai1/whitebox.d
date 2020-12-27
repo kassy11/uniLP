@@ -1,0 +1,1 @@
+whitebox.o: whitebox.c

@@ -4,9 +4,11 @@ void blackbox(){
   init_scan_test();
 }
 
+// 成功例（適切な入力）、失敗例（mplファイルではないファイル）、失敗例（入力なし）
+// をテストケースとしてブラックボックステストを実施する
 void init_scan_test(){
   char files[][100] = {
-    "kadai1_samples/sample011.mpl",
+    "sample1/sample011.mpl",
     "test.txt",
     ""
   };

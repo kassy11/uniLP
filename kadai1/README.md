@@ -2,8 +2,8 @@
 
 #### Usage
 - compile: `make`
-- run: `./tc kadai1_samples/sample011.mpl`
-  - you can use sample file at ./kadai1_samples
+- run: `./tc sample1/sample011.mpl`
+  - you can use sample file at `./sample1`
 - test: 
   - unit test: `./tc test` 
-  - integtation test:  `make test` 
+  - integration test:  `make test` 
