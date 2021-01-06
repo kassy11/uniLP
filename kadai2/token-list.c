@@ -82,17 +82,12 @@ int main(int nc, char *np[])
     return 0;
   }
 
-  /* 作成する部分：トークンカウント用の配列？を初期化する */
-  //while ((token = scan()) >= 0)
-  //{
-  //  numtoken[token]++;
-  //  parse_program();
-  //}
+  // 最初のトークンを読み出す
   token = next_token();
   parse_program();
   end_scan();
-  /* 作成する部分:カウントした結果を出力する */
-  printf("\n--------End PP--------\n");
+  // カウント結果を出力
+  printf("\n----------------\n");
   printf("LAST-LINENUM : %d\n",get_linenum());
   printf("LAST-STRING: %s\n", string_attr);
   for(i = 1;i < NUMOFTOKEN + 1;i++)
@@ -107,9 +102,9 @@ int main(int nc, char *np[])
 
 int error(char *mes)
 {
-  //printf("\x1b[31m");
+  printf("\x1b[31m"); // これは環境によっては色付けされない可能性あり？
   printf("\n ERROR: %s : linenum %d\n", mes,linenum);
-  //printf("\x1b[32m");
+  printf("\x1b[32m");
   end_scan();
   return(ERROR);
 }

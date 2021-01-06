@@ -17,3 +17,4 @@ $(PROG): $(OBJS)
 
 clean:
 	rm -f $(PROG) $(OBJS) $(DEPS)
+	rm -f *.out

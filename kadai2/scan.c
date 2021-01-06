@@ -1,3 +1,5 @@
+// 基本的にはkadai1と同様
+
 #include "token-list.h"
 FILE *fp;
 char cbuf;
@@ -10,19 +12,20 @@ extern key key_keyword[KEYWORDSIZE];
 extern key key_symbol[KEYWORDSIZE];
 int init_scan(char *filename)
 {
-  fp = fopen(filename,"r");
-  if (fp == NULL)
-  {
-    //失敗と表示し終了
-    printf("ファイルオープン失敗\n");
-    return -1;
-  }
-  cbuf = fgetc(fp);
-  if(cbuf < 0)return -1;
-  linenum = 1;
-  tabnum = 0;
-  init_idtab();
-  return 0;
+    // .mplファイルのみを読み込む
+    char mpl[] = ".mpl";
+
+    fp = fopen(filename,"r");
+    if ((fp == NULL) || (strstr(filename, mpl)==NULL)){
+        printf("init_scan: Cannot open the file\n");
+        return -1;
+    }
+    // 最初の1文字目を読み出す
+    cbuf = fgetc(fp);
+    if(cbuf < 0)return -1;
+    linenum = 1;
+    init_idtab();
+    return 0;
 }
 int scan(void)
 {
@@ -33,6 +36,7 @@ int scan(void)
 
   if(cbuf < 0)return -1;
 
+  // 不要なコメントや分離子は無視する
   while(cbuf <= 32 || cbuf == 123 || cbuf == 47)
   {
     if ((cbuf == 13) || (cbuf == 10))
@@ -60,7 +64,7 @@ int scan(void)
           cbuf = fgetc(fp);
           if(cbuf < 0)return -1;
           break;
-          //return 0;
+          return 0;
         }
       }
     }
@@ -95,7 +99,7 @@ int scan(void)
             {
               cbuf = fgetc(fp);
               break;
-              //return 0;
+              return 0;
             }
           }
         }
@@ -109,9 +113,6 @@ int scan(void)
 
   }
 
-
-
-  //1文字目がcbufに入ってる
   if((cbuf >= 65 && cbuf <= 90) || (cbuf >= 97 && cbuf <= 122))//アルファベット
   {
     while(1){
@@ -119,7 +120,7 @@ int scan(void)
       snprintf(token,MAXSTRSIZE,"%s%c",token,cbuf);
 
       cbuf = fgetc(fp);
-      
+
 
       if (!((cbuf >= 65 && cbuf <= 90) || (cbuf >= 97 && cbuf <= 122) || (cbuf >= 48 && cbuf <= 57)))
       {//文字でも数字でもなければ
@@ -187,7 +188,7 @@ int scan(void)
     }
     return -1;//error
   }
-  else if (cbuf == 39) //string
+  else if (cbuf == 39)
   {
     snprintf(token, MAXSTRSIZE, "%s%c", token, cbuf);
     cbuf = fgetc(fp);
@@ -231,6 +232,42 @@ int scan(void)
         }
       }
     }
+  }
+  // ダブルクオーテーション)はじまりの文字列のとき
+  else if (cbuf == 34) {
+      cbuf = fgetc(fp);
+      while (1){
+
+          if (cbuf < 0){
+              error("EOF happened\n");
+              return -1;
+          }
+
+          if (cbuf == 34){
+              cbuf = fgetc(fp);
+
+              if (cbuf == 34) {
+                  cbuf = fgetc(fp);
+                  continue;
+              }
+              memset(string_attr, 0, sizeof(string_attr));
+              snprintf(string_attr, MAXSTRSIZE, "%s", token);
+              return TSTRING;
+          }
+          else
+          {
+              snprintf(token, MAXSTRSIZE, "%s%c", token, cbuf);
+              cbuf = fgetc(fp);
+              if (cbuf < 0){
+                  error("EOF happened\n");
+                  return -1;
+              }
+              else if ((cbuf == 13) || (cbuf == 10)){
+                  error("included new line in string\n");
+                  return -1;
+              }
+          }
+      }
   }
 
   return -1;

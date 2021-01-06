@@ -1,3 +1,5 @@
+// kadai1と同内容
+
 #include "token-list.h"
 
 struct ID {

@@ -1,3 +1,5 @@
+// 構文解析器の本体
+
 #include "token-list.h"
 extern int token;
 extern int linenum;
@@ -7,6 +9,8 @@ extern int compound_tab[10];
 int is_begin_line = 1; 
 int is_procedure_begintoend = 0;
 int compound_count = 0;
+
+// 生成規則に従ってトークンを読み進めていく
 int next_token()
 {
   int before_token = token;
@@ -95,6 +99,9 @@ int next_token()
 
   return token_num;
 }
+
+// プログラムの大枠の生成規則
+// プログラム ::= "program" "名前" ";" ブロック "."
 int parse_program() {
   if(token != TPROGRAM) return(error("Keyword 'program' is not found"));
   token = next_token();
@@ -107,6 +114,9 @@ int parse_program() {
   token = next_token();
   return(NORMAL);
 }
+
+// 以下、生成規則
+
 int block()
 {
   while(token == TPROCEDURE || token == TVAR)
