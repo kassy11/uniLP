@@ -6,6 +6,7 @@
 
 #define MAXSTRSIZE 1024
 
+// scan()で返す値
 /* Token */
 #define TNAME 1       /* Name : Alphabet { Alphabet | Digit } */
 #define TPROGRAM 2    /* program : Keyword */

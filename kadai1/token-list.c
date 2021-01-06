@@ -64,8 +64,9 @@ char *tokenstr[NUMOFTOKEN + 1] = {
         "false", "NUMBER", "STRING", "+", "-", "*", "=", "<>", "<", "<=", ">",
         ">=", "(", ")", "[", "]", ":=", ".", ",", ":", ";", "read", "write", "break"};
 
-// command-line args
+// 起動時プログラム
 int main(int nc, char *np[]){
+    // コマンドライン引数で「test」を受け取るとテストを開始する
     if(strcmp(np[1], "test")==0){
       printf("----blackbox test----\n");
       blackbox();
@@ -91,6 +92,7 @@ int main(int nc, char *np[]){
       return 0;
     }
 
+    // scan()を実行し、numtoken配列にトークンの数を加算していく
     while ((token = scan()) >= 0) {
       numtoken[token]++;
     }
