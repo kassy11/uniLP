@@ -21,6 +21,7 @@ clean:
 	rm -rf $(PROG) $(OBJS) $(DEPS) $(RDIR)
 
 test: $(PROG)
+	chmod +x test.sh
 	./test.sh
 
 .PHONY: test clean

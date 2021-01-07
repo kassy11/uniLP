@@ -17,3 +17,9 @@ $(PROG): $(OBJS)
 
 clean:
 	rm -f $(PROG) $(OBJS) $(DEPS)
+
+test: $(PROG)
+	chmod +x test.sh
+	./test.sh
+
+.PHONY: test clean

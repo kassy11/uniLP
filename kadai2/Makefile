@@ -18,3 +18,12 @@ $(PROG): $(OBJS)
 clean:
 	rm -f $(PROG) $(OBJS) $(DEPS)
 	rm -f *.out
+	rm -rf results/
+	rm -rf html/ latex/
+
+test: $(PROG)
+	chmod +x test.sh
+	./test.sh
+
+.PHONY: test clean
+

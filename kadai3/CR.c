@@ -59,8 +59,6 @@ struct ID *search_localcr(char *np)
 void cr_globalDeclaration() //変数宣言時変数だけ
 {
   struct ID *newid;
-  //struct TYPE *newtype;
-  //struct LINE *newline;
   if ((newid = (struct ID *)malloc(sizeof(struct ID))) == NULL)
   {
     printf("can not malloc in cr_globalcountup : newid\n");
@@ -309,13 +307,7 @@ void cr_procedure_setparatp(int type,int is_array,int paracount)
           proctype->etp = tarray;
           proctype->paratp = NULL;
         }
-        //printf("FF");
         struct TYPE *t, *before_t;
-        //if ((t = (struct TYPE *)malloc(sizeof(struct TYPE))) == NULL) //領域確保
-        //{
-        //  printf("can not malloc in cr_globalcountup\n");
-        //  return;
-        //}
         for (t = l->itp; t != NULL; t = t->paratp)
         {
           before_t = t;
@@ -419,6 +411,8 @@ void print_globalcr()
 { /* Output the registered data */
   struct ID *p;
   printf("-----------print global-------------\n");
+  printf("NAME\tTYPE\t\tDef\tRef\n");
+    printf("----------------------------------------------------\n");
   for (p = globalidroot; p != NULL; p = p->nextp)
   {
     if(p->itp->ttype == TPINT)
@@ -482,15 +476,10 @@ void print_globalcr()
     for(l = p->irefp;l != NULL;l = l->nextlinep)
     {
       printf(" %d",l->reflinenum);
-      //l = l->nextlinep;
-      //if(l != NULL)
-      //  printf(", ");
-      //else
-      //  break;
     }
     printf("\n");
   }
-  printf("-------------------------\n");
+  printf("----------------------------------------------\n");
 }
 void print_localcr()
 { /* Output the registered data */
@@ -560,11 +549,6 @@ void print_localcr()
     for (l = p->irefp; l != NULL; l = l->nextlinep)
     {
       printf(" %d", l->reflinenum);
-      //l = l->nextlinep;
-      //if(l != NULL)
-      //  printf(", ");
-      //else
-      //  break;
     }
     printf("\n");
   }
@@ -639,10 +623,6 @@ void print_allcr()
       printf("can not malloc in cr_localcountup\n");
       return;
     }
-    //if(p->irefp != NULL)
-    //{
-    //  //printf("p->irefp->reflinenium : %d\n",p->irefp->reflinenum);
-    //}
     l = p->irefp;
     while(l != NULL)
     {
@@ -651,17 +631,7 @@ void print_allcr()
         l = l->nextlinep;
       else
         break;
-      //printf(" %d",l->reflinenum);
     }
-    //for (l = p->irefp; l != NULL; l = l->nextlinep)
-    //{
-    //  printf(" %d", l->reflinenum);
-    //  //l = l->nextlinep;
-    //  //if(l != NULL)
-    //  //  printf(", ");
-    //  //else
-    //  //  break;
-    //}
     printf("\n");
   }
 }
@@ -948,8 +918,6 @@ int check_proc()
 }
 struct TYPE *count_formal_parameters()
 {
-  //->itp->ttypeを追っていって仮引数の数をreturn，なければ0
-  //リストで返した方がいいかも？
   struct ID *p;
   struct TYPE *t,*result,*r;
   if ((p = search_globalcr(string_attr)) != NULL)

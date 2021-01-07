@@ -13,3 +13,9 @@
 - 構文的な誤りや制約規則違反があれば，それを最初に検 出した時点で，検出した行の番号と，誤りまたは違反の内容を出力
 
 ### Usage
+- compile: `make`
+- run: `./cr sample3/sample35.mpl`
+  - you can use sample file at `./sample3`
+- test:
+  - unit test: `./cr test`
+  - integration test:  `make test`

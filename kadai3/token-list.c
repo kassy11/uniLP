@@ -69,7 +69,6 @@ int main(int nc, char *np[])
 {
   int i;
   token = 0;
-  //char *ptr;
 
   if (nc < 2)
   {
@@ -102,15 +101,15 @@ int main(int nc, char *np[])
   release_idtab();
   release_globalcr();
   release_allcr();
-  //release_localcr();
+  release_localcr();
   return 0;
 }
 
 int error(char *mes)
 {
-  //printf("\x1b[31m");
+  printf("\x1b[31m");
   printf("\n ERROR: %s : linenum %d\n", mes,linenum);
-  //printf("\x1b[32m");
+  printf("\x1b[32m");
   end_scan();
   return(ERROR);
 }

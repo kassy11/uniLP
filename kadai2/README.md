@@ -13,3 +13,8 @@
 - 構文的誤りがあれば、検出した時点で検出場所の行番号と誤りの内容を出力　　
 
 ### Usage
+- compile: `make`
+- run: `./pp sample2/sample27.mpl`
+  - you can use sample file at `./sample2`
+- test:
+  - integration test:  `make test` 

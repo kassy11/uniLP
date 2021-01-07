@@ -1,6 +1,5 @@
 program sample;
 var sum : integer;
-var sum : integer;
 var data : integer;
 var nnnn : array[200] of integer;
 var n : integer;

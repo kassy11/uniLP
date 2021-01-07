@@ -13,7 +13,6 @@ int init_scan(char *filename)
   fp = fopen(filename,"r");
   if (fp == NULL)
   {
-    //失敗と表示し終了
     printf("ファイルオープン失敗\n");
     return -1;
   }
@@ -43,7 +42,6 @@ int scan(void)
       {
         cbuf = fgetc(fp);//CRLF
       }
-      //linenum++;
     }
     else if(cbuf == 123)//{}コメント文
     {
@@ -60,7 +58,6 @@ int scan(void)
           cbuf = fgetc(fp);
           if(cbuf < 0)return -1;
           break;
-          //return 0;
         }
       }
     }
@@ -108,10 +105,6 @@ int scan(void)
       cbuf = fgetc(fp);
 
   }
-
-
-
-  //1文字目がcbufに入ってる
   if((cbuf >= 65 && cbuf <= 90) || (cbuf >= 97 && cbuf <= 122))//アルファベット
   {
     while(1){
