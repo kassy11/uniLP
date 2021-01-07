@@ -17,6 +17,7 @@ $(PROG): $(OBJS)
 
 clean:
 	rm -f $(PROG) $(OBJS) $(DEPS)
+	rm -rf results/ html/ latex/
 
 test: $(PROG)
 	chmod +x test.sh

@@ -17,5 +17,4 @@
 - run: `./cr sample3/sample35.mpl`
   - you can use sample file at `./sample3`
 - test:
-  - unit test: `./cr test`
   - integration test:  `make test`
