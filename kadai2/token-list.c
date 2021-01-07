@@ -105,6 +105,5 @@ int error(char *mes)
   printf("\x1b[31m"); // これは環境によっては色付けされない可能性あり？
   printf("\n ERROR: %s : linenum %d\n", mes,linenum);
   printf("\x1b[32m");
-  end_scan();
   return(ERROR);
 }

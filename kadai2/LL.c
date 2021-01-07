@@ -116,7 +116,6 @@ int parse_program() {
 }
 
 // 以下、生成規則
-
 int block()
 {
   while(token == TPROCEDURE || token == TVAR)
